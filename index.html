@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Password Generator</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+#main_Box{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+    gap: 30px;
+}
+#main_Box h1{
+    font-size: 4rem;
+    font-weight: 600;
+}
+#Password_box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 500px;
+    gap: 2px;
+    box-shadow: 3px 3px 5px grey;
+    border-radius: 5px;
+}
+#Password_box input{
+    width: 90%;
+    height: 90%;
+    border: none;
+    outline: none;
+}
+#Password_box i{
+    font-size: 30px;
+}
+
+#button_box button{
+    width: 200px;
+    padding: 10px;
+    background-color: rgb(4, 4, 71);
+    border-radius: 10px;
+    color :white;
+    outline: none;
+    border: none;
+}
+#range_box{
+    display: flex;
+    gap: 20px;
+}
+#range_box input:in-range{
+    width: 400px;
+}
+#container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+
+<div id="container">
+
+
+    <div id="main_Box">
+
+        <h1>RANDOM PASSWORD <br> GENERATOR</h1>
+        <div id="Password_box">
+            <input type="text" name="Password" id="Password">
+            <i class="bi bi-clipboard-fill" id="clipbox"></i>
+        </div>
+
+        <div id="button_box">
+            <button id="weak">Generate Password</button>
+            <button id="clear">Clear</button>
+
+        </div>
+        <p>Size of Password</p>
+        <div id="range_box">
+            <p id="sizevalue">26</p>
+            <input type="range" min="1" max="50" name="size" id="size">
+        </div>
+
+    </div>
+    
+    <div id="img">
+        <img src="https://media.istockphoto.com/id/1412092597/vector/reset-password-action.jpg?s=612x612&w=0&k=20&c=CiD0trFMObHdQVNWU-zbSzB2kJXgBylzz33hwtV7KRc=" alt="">
+    </div>
+        
+</div>
+
+    <script>
+        //Constant
+const input = document.querySelector('input');
+const weak =  document.getElementById('weak');
+const clear = document.getElementById('clear');
+const copy = document.getElementById('clipbox');
+const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+const number = "1234567890";
+const symbol = "~!#$%^&*()_+`?'+=";
+const sizevalue =  document.getElementById('sizevalue')
+const size =  document.getElementById('size');
+let pass = "";
+
+//Range Funtionality
+size.addEventListener('change', ()=>{
+  sizevalue.innerText = size.value;
+  if(size.value <= 10){
+    sizevalue.style.color = "red";
+  }
+   else if ( size.value <= 24){
+    sizevalue.style.color = "orange";
+  }
+  else{
+    sizevalue.style.color = "green";
+  }
+})
+
+copy.addEventListener('click', ()=>{
+  if(input.value == 0){
+    alert("Generate PassWord First")
+  }
+  else{
+    navigator.clipboard.writeText(input.value);
+    alert('Copied')
+  }
+})
+
+//Click funtionality
+function Passgene(){
+    for(let i = 0; i<=49; i++){
+    pass = pass + upperCase[Math.floor(Math.random()*10)];
+    pass = pass + lowerCase[Math.floor(Math.random()*10)];
+    pass = pass + number[Math.floor(Math.random()*10)];
+    pass = pass + symbol[Math.floor(Math.random()*10)];
+}
+
+pass = pass.substring(0, size.value);
+input.value = pass;
+console.log(size.value)
+pass = "";
+}
+
+
+
+weak.addEventListener('click', Passgene)
+
+clear.addEventListener('click', ()=>{
+  input.value = " ";
+})
+
+    </script>
+</body>
+
+</html>
